@@ -1,0 +1,55 @@
+name: sales_app_flutter
+description: A Flutter mobile application for managing sales and purchase invoices
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management
+  provider: ^6.1.1
+
+  # UI components
+  cupertino_icons: ^1.0.2
+
+  # Utilities
+  intl: ^0.18.1
+
+  # PDF generation (for when implementing PDF functionality)
+  pdf: ^3.10.7
+  printing: ^5.11.1
+
+  # File handling
+  path_provider: ^2.1.1
+
+  # HTTP requests (for future API integration)
+  http: ^1.1.0
+
+  # Local storage
+  shared_preferences: ^2.2.2
+
+  # Date picker
+  flutter_datetime_picker_plus: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Add any assets here
+  # assets:
+  #   - images/
+
+  # Add any fonts here
+  # fonts:
+  #   - family: CustomFont
+  #     fonts:
+  #       - asset: fonts/CustomFont-Regular.ttf
