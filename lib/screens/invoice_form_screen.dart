@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sales_app_flutter/widgets/invoice_details_list_item.dart';
 import '../providers/invoice_provider.dart';
 import '../models/invoice.dart';
 import '../utils/currency_formatter.dart';
@@ -75,7 +76,7 @@ class _InvoiceFormScreenState extends State<InvoiceFormScreen> {
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         description: '',
         quantity: 1,
-        unitPrice: 0.0,
+        unitPrice: 0,
         total: 0.0,
       ));
     });
@@ -300,6 +301,7 @@ class _InvoiceFormScreenState extends State<InvoiceFormScreen> {
 
   Widget _buildItemsCard() {
     return Card(
+      key: Key('items_card'),
       child: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -320,11 +322,17 @@ class _InvoiceFormScreenState extends State<InvoiceFormScreen> {
               ],
             ),
             SizedBox(height: 16),
-            ..._items.asMap().entries.map((entry) {
-              final index = entry.key;
-              final item = entry.value;
-              return _buildItemWidget(index, item);
-            }),
+            ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              key: Key('items_list'),
+              itemCount: _items.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+              return _buildItemWidget(index, _items[index]);
+            },)
+            // ..._items.asMap().entries.map((entry) {
+            //
+            // }),
           ],
         ),
       ),
@@ -332,111 +340,7 @@ class _InvoiceFormScreenState extends State<InvoiceFormScreen> {
   }
 
   Widget _buildItemWidget(int index, InvoiceItem item) {
-    final descriptionController = TextEditingController(text: item.description);
-    final quantityController = TextEditingController(text: item.quantity.toString());
-    final unitPriceController = TextEditingController(text: item.unitPrice.toString());
-
-    return Container(
-      margin: EdgeInsets.only(bottom: 16),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Item ${index + 1}',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              if (_items.length > 1)
-                IconButton(
-                  onPressed: () => _removeItem(index),
-                  icon: Icon(Icons.delete),
-                  color: Colors.red,
-                ),
-            ],
-          ),
-          SizedBox(height: 12),
-          TextFormField(
-            controller: descriptionController,
-            decoration: InputDecoration(
-              labelText: 'Description',
-              border: OutlineInputBorder(),
-            ),
-            onChanged: (value) {
-              _updateItem(index, item.copyWith(description: value));
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter description';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: quantityController,
-                  decoration: InputDecoration(
-                    labelText: 'Quantity',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    final quantity = int.tryParse(value) ?? 0;
-                    _updateItem(index, item.copyWith(quantity: quantity));
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty || int.tryParse(value) == null) {
-                      return 'Enter valid quantity';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(width: 12),
-              Expanded(
-                child: TextFormField(
-                  controller: unitPriceController,
-                  decoration: InputDecoration(
-                    labelText: 'Unit Price',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  onChanged: (value) {
-                    final unitPrice = double.tryParse(value) ?? 0.0;
-                    _updateItem(index, item.copyWith(unitPrice: unitPrice));
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty || double.tryParse(value) == null) {
-                      return 'Enter valid price';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(width: 12),
-              Expanded(
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: 'Total',
-                    border: OutlineInputBorder(),
-                  ),
-                  child: Text(CurrencyFormatter.format(item.total)),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+    return InvoiceDetailsListItem(length: _items.length, index: index, item: item, updateItem: _updateItem, removeItem: _removeItem);
   }
 
   Widget _buildTotalsCard() {

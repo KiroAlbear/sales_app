@@ -8,7 +8,7 @@ class InvoiceItem {
   final String id;
   final String description;
   final int quantity;
-  final double unitPrice;
+  final int unitPrice;
   final double total;
 
   InvoiceItem({
@@ -42,7 +42,7 @@ class InvoiceItem {
   InvoiceItem copyWith({
     String? description,
     int? quantity,
-    double? unitPrice,
+    int? unitPrice,
   }) {
     final newQuantity = quantity ?? this.quantity;
     final newUnitPrice = unitPrice ?? this.unitPrice;
@@ -51,7 +51,7 @@ class InvoiceItem {
       description: description ?? this.description,
       quantity: newQuantity,
       unitPrice: newUnitPrice,
-      total: newQuantity * newUnitPrice,
+      total: newQuantity * double.parse(newUnitPrice.toString()),
     );
   }
 }

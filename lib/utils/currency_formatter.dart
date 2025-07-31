@@ -4,7 +4,7 @@ class CurrencyFormatter {
   static final NumberFormat _formatter = NumberFormat.currency(
     locale: 'en_US',
     symbol: '\$',
-    decimalDigits: 2,
+    decimalDigits: 1,
   );
 
   static String format(double amount) {

@@ -153,10 +153,7 @@ class DashboardScreen extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            MultiProvider(providers: [
-                                          ChangeNotifierProvider(
-                                              create: (_) => InvoiceProvider()),
-                                        ], child: InvoiceListScreen()),
+                                            InvoiceListScreen(),
                                       ));
                                 },
                                 icon: Icon(Icons.description, size: 16),
@@ -168,7 +165,7 @@ class DashboardScreen extends StatelessWidget {
                           if (invoiceProvider.invoices.isEmpty)
                             _buildEmptyState(context)
                           else
-                            ...invoiceProvider.invoices.take(3).map(
+                            ...invoiceProvider.invoices.take(invoiceProvider.invoices.length).map(
                                   (invoice) => RecentInvoiceCard(
                                     invoice: invoice,
                                     onTap: () => _navigateToInvoiceDetail(

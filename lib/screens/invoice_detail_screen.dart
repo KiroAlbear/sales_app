@@ -366,7 +366,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 4),
                             Text(
-                              '${item.quantity} × ${CurrencyFormatter.format(item.unitPrice)}',
+                              '${item.quantity} × ${CurrencyFormatter.format(double.tryParse(item.unitPrice.toString())??0)}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall
@@ -599,7 +599,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                     .map((item) => [
                           item.description,
                           item.quantity.toString(),
-                          CurrencyFormatter.format(item.unitPrice),
+                          CurrencyFormatter.format(double.tryParse(item.unitPrice.toString())??0),
                           CurrencyFormatter.format(item.total),
                         ])
                     .toList(),
