@@ -1,7 +1,8 @@
+import 'package:accounting_app_flutter/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sales_app_flutter/providers/invoice_provider.dart';
-import 'package:sales_app_flutter/screens/dashboard_screen.dart';
+import 'package:accounting_app_flutter/providers/invoice_provider.dart';
+import 'package:accounting_app_flutter/screens/dashboard_screen.dart';
 
 void main() {
   runApp(const MyApp());

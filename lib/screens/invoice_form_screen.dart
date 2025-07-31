@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sales_app_flutter/widgets/invoice_details_list_item.dart';
+import 'package:accounting_app_flutter/widgets/invoice_details_list_item.dart';
 import '../providers/invoice_provider.dart';
 import '../models/invoice.dart';
 import '../utils/currency_formatter.dart';

@@ -1,4 +1,4 @@
-# sales_app_flutter
+# accounting_app_flutter
 
 A new Flutter project.
 
